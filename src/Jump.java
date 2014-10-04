@@ -12,11 +12,13 @@ public class Jump extends BasicGame {
 	private Lake lake;
 	private Door[] doors;
 	private Door door;
-	private int x=50;
-	private int y=40;
+	private int x = 50;
+	private int y = 40;
 	private Log[][] logs;
-	private int v=3;
-	
+	private int v = 3;
+	private boolean underWater;
+	private boolean isOnLog;
+	private Bgdoor bgdoor;
 
 	public Jump(String title) {
 		super(title);
@@ -26,24 +28,21 @@ public class Jump extends BasicGame {
 	@Override
 	public void render(GameContainer arg0, Graphics arg1) throws SlickException {
 		// TODO Auto-generated method stub
-		for(Door door:doors)
-		{
+		for (Door door : doors) {
 			door.draw();
 		}
-		//door.draw();
+		// door.draw();
 		lake.draw();
 		ground.draw();
-		
-		for(int y=0;y<3;y++){
-			for(int x=0;x<3;x++){
+
+		for (int y = 0; y < 3; y++) {
+			for (int x = 0; x < 3; x++) {
 				logs[y][x].draw();
-				
+
 			}
 		}
 		rabbit.draw();
-		
-		
-		
+		bgdoor.draw();
 
 	}
 
@@ -51,39 +50,51 @@ public class Jump extends BasicGame {
 	public void init(GameContainer arg0) throws SlickException {
 		// TODO Auto-generated method stub
 		doors = new Door[3];
-		for(int i = 0 ; i < 3 ; i++)
-		{
-			doors[i] = new Door(x,y);
-			x+=150;
+		for (int i = 0; i < 3; i++) {
+			doors[i] = new Door(x, y);
+			x += 150;
 		}
 		lake = new Lake(0, 160);
 		ground = new Ground(0, 380);
-		
-		
-		logs=new Log[3][3]; 
-		for(int y=0;y<3;y++){
-			for(int x=0;x<3;x++){
-				logs[y][x]= new Log(150*x,170+70*y,2*v);
+
+		logs = new Log[3][3];
+		for (int y = 0; y < 3; y++) {
+			for (int x = 0; x < 3; x++) {
+				logs[y][x] = new Log(235 * x, 170 + 70 * y, 2 * v);
 			}
-			v-= 1;
+			v -= 1;
 		}
-		rabbit = new Rabbit(260, 295);
-		
+		rabbit = new Rabbit(260, 360);
+		bgdoor = new Bgdoor(1,1);
 
 	}
+	
 
 	@Override
 	public void update(GameContainer containner, int arg1)
 			throws SlickException {
 		rabbitUpdate(containner);
-		for(int y=0;y<3;y++){
-			for(int x=0;x<3;x++){
+
+		underWater = false;
+		isOnLog = false;
+		for (int y = 0; y < 3; y++) {
+			for (int x = 0; x < 3; x++) {
 				logs[y][x].update();
-				
+				if (Math.abs(rabbit.centerx - logs[y][x].centerx) < 92
+						&& Math.abs(rabbit.centery - logs[y][x].centery) < 47) {
+					isOnLog = true;
+					rabbit.x += logs[y][x].v;
+				} else if (Math.abs(rabbit.centerx - logs[y][x].centerx) >= 92
+						&& Math.abs(rabbit.centery - logs[y][x].centery) < 47) {
+					underWater = true;
+				}
 			}
 		}
+		if (underWater && !isOnLog) {
+			rabbit.x = 260;
+			rabbit.y = 360;
+		}
 		rabbit.update();
-		
 
 	}
 
@@ -91,20 +102,20 @@ public class Jump extends BasicGame {
 		Input input = containner.getInput();
 		if (input.isKeyDown(Input.KEY_LEFT)) {
 			rabbit.x -= 5;
-			//rabbit.image.setRotation(270);
+			// rabbit.image.setRotation(270);
 
 		}
 		if (input.isKeyDown(Input.KEY_RIGHT)) {
 			rabbit.x += 5;
-			//rabbit.image.setRotation(90);
+			// rabbit.image.setRotation(90);
 		}
-		if(input.isKeyPressed(Input.KEY_UP)){
-			rabbit.y -= 80;
+		if (input.isKeyPressed(Input.KEY_UP)) {
+			rabbit.y -= 70;
 		}
-		if(input.isKeyPressed(Input.KEY_DOWN)){
-			rabbit.y += 80;
+		if (input.isKeyPressed(Input.KEY_DOWN)) {
+			rabbit.y += 70;
 		}
-		
+
 	}
 
 	public static void main(String[] args) {

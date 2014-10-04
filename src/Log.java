@@ -6,6 +6,8 @@ public class Log {
 	private Image image;
 	public int x;
 	public int y;
+	public int centerx;
+	public int centery;
 	public int v; 
 	public Log(int x,int y,int v) throws SlickException{
 		image =new Image("pic/log.png");
@@ -16,10 +18,10 @@ public class Log {
 	 public void update(){
 		 this.x += v;
 		 if(x>600){
-			 x=-150;
-			 
+			 x=-150; 
 		 }
-		 
+		 centerx = x+62;
+		 centery = y+17;
 		 
 	 }
 	
