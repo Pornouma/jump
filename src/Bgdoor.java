@@ -1,4 +1,5 @@
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
 
 public class Bgdoor {
@@ -6,7 +7,7 @@ public class Bgdoor {
 	public int x;
 	public int y;
 	
-	public Bgdoor(int x,int y)throws Exception{
+	public Bgdoor(int x,int y)throws SlickException{
 		image = new Image("pic/bgdoor.jpg");
 		this.x=x;
 		this.y=y;

@@ -19,6 +19,7 @@ public class Jump extends BasicGame {
 	private boolean underWater;
 	private boolean isOnLog;
 	private Bgdoor bgdoor;
+	private boolean indoor;
 
 	public Jump(String title) {
 		super(title);
@@ -28,6 +29,7 @@ public class Jump extends BasicGame {
 	@Override
 	public void render(GameContainer arg0, Graphics arg1) throws SlickException {
 		// TODO Auto-generated method stub
+		bgdoor.draw();
 		for (Door door : doors) {
 			door.draw();
 		}
@@ -42,7 +44,7 @@ public class Jump extends BasicGame {
 			}
 		}
 		rabbit.draw();
-		bgdoor.draw();
+		
 
 	}
 
@@ -95,7 +97,12 @@ public class Jump extends BasicGame {
 			rabbit.y = 360;
 		}
 		rabbit.update();
-
+		
+		/*for(int i=0;i<3;i++){
+			if(Math.abs(rabbit.centerx-door.centerx)< 113 && Math.abs(rabbit.centery-door.centery)<81 ){
+				indoor = true;
+			}
+		}*/
 	}
 
 	private void rabbitUpdate(GameContainer containner) {
