@@ -44,7 +44,6 @@ public class Jump extends BasicGame {
 			}
 		}
 		rabbit.draw();
-		
 
 	}
 
@@ -67,10 +66,9 @@ public class Jump extends BasicGame {
 			v -= 1;
 		}
 		rabbit = new Rabbit(260, 360);
-		bgdoor = new Bgdoor(1,1);
+		bgdoor = new Bgdoor(1, 1);
 
 	}
-	
 
 	@Override
 	public void update(GameContainer containner, int arg1)
@@ -97,12 +95,11 @@ public class Jump extends BasicGame {
 			rabbit.y = 360;
 		}
 		rabbit.update();
-		
-		/*for(int i=0;i<3;i++){
-			if(Math.abs(rabbit.centerx-door.centerx)< 113 && Math.abs(rabbit.centery-door.centery)<81 ){
-				indoor = true;
-			}
-		}*/
+
+		/*
+		 * for(int i=0;i<3;i++){ if(Math.abs(rabbit.centerx-door.centerx)< 113
+		 * && Math.abs(rabbit.centery-door.centery)<81 ){ indoor = true; } }
+		 */
 	}
 
 	private void rabbitUpdate(GameContainer containner) {
